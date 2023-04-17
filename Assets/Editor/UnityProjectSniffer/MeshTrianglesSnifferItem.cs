@@ -114,7 +114,7 @@ namespace ZXthex.UnityProjectSniffer
                 {
                     var smr = current.GetComponent<SkinnedMeshRenderer>();
                     if (smr != null && (smr.enabled || mode == ActiveMode.All))
-                        mesh = mf.sharedMesh;
+                        mesh = smr.sharedMesh;
                 }
 
                 if (mesh != null)
