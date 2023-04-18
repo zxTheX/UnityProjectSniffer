@@ -19,7 +19,7 @@ namespace ZXthex.UnityProjectSniffer
         [MenuItem("Window/Analysis/Sniffer %#z")]
         static void CreateWindow()
         {
-            var window = CreateWindow<SnifferEditorWindow>();
+            var window = CreateInstance<SnifferEditorWindow>();
 
             window.titleContent = new GUIContent("Sniffer");
             window.startView = true;
