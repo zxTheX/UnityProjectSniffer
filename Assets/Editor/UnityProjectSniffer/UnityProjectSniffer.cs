@@ -654,7 +654,7 @@ static class L10n
     {
         get
         {
-            var assem = typeof(UnityEditor.Localization.Editor.LocalizationAttribute).Assembly;
+            var assem = typeof(UnityEditor.Editor).Assembly;
             var t = assem.GetType("UnityEditor.LocalizationDatabase");
             var pi = t.GetProperty("currentEditorLanguage");
             return (SystemLanguage)pi.GetValue(null);
