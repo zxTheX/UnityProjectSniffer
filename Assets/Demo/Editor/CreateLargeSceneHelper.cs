@@ -125,6 +125,10 @@ public class CreateLargeSceneHelper
         }
         else
         {
+            if (!Directory.Exists(meshDir))
+            {
+                Directory.CreateDirectory(meshDir);
+            }
             var vs = new Vector3[(grids + 1) * (grids + 1)];
             var ts = new int[grids * grids * 2 * 3];
             mesh = new Mesh();
