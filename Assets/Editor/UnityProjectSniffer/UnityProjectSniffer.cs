@@ -168,7 +168,9 @@ namespace ZXthex.UnityProjectSniffer
             var popR = new Rect(wholeR.width * 0.3f, wholeR.height * 0.3f, wholeR.width * 0.4f, 36f);
             popIndex = EditorGUI.Popup(popR, popIndex, popupContents);
 
-            var buttonR = new Rect(wholeR.width * 0.3f, wholeR.height * 0.5f, wholeR.width * 0.4f, 36f);
+            var itemR = snifferItems[popIndex].DrawItemGUI(popR);
+
+            var buttonR = new Rect(wholeR.width * 0.3f, itemR.yMax + wholeR.height * 0.2f, wholeR.width * 0.4f, 36f);
             if (GUI.Button(buttonR, L10n.Tr("Start")))
             {
                 startView = false;
@@ -305,7 +307,7 @@ namespace ZXthex.UnityProjectSniffer
 
         protected abstract string title { get; }
 
-        public abstract void DrawItemGUI();
+        public virtual Rect DrawItemGUI(Rect lastRect) => lastRect;
 
         public abstract Int64Calc GetItemCalc();
     }
@@ -622,6 +624,9 @@ static class L10n
             ["File Size | Assets"] = "File Size | Assets",
             ["Start"] = "Start",
             ["Self"] = "Self",
+            ["TrianglesInSceneMeshCalc.ActiveMode.All"] = "Include inactive game objects",
+            ["TrianglesInSceneMeshCalc.ActiveMode.ActiveGameObject"] = "Only self-active game objects",
+            ["TrianglesInSceneMeshCalc.ActiveMode.ActiveAndEnabled"] = "self-active game objects with renderer enabled",
         },
         [SystemLanguage.ChineseSimplified] = new Dictionary<string, string>
         {
@@ -629,6 +634,9 @@ static class L10n
             ["File Size | Assets"] = "文件大小 | 资产",
             ["Start"] = "开始",
             ["Self"] = "自身",
+            ["TrianglesInSceneMeshCalc.ActiveMode.All"] = "包含未激活游戏物体",
+            ["TrianglesInSceneMeshCalc.ActiveMode.ActiveGameObject"] = "只有激活的游戏物体",
+            ["TrianglesInSceneMeshCalc.ActiveMode.ActiveAndEnabled"] = "激活游戏物体且Renderer启用",
         },
         [SystemLanguage.ChineseTraditional] = new Dictionary<string, string>
         {
@@ -636,6 +644,9 @@ static class L10n
             ["File Size | Assets"] = "文件大小 | 資產",
             ["Start"] = "開始",
             ["Self"] = "自身",
+            ["TrianglesInSceneMeshCalc.ActiveMode.All"] = "包含未激活游戲物體",
+            ["TrianglesInSceneMeshCalc.ActiveMode.ActiveGameObject"] = "只有激活游戲物體",
+            ["TrianglesInSceneMeshCalc.ActiveMode.ActiveAndEnabled"] = "激活游戲物體且Renderer啓用",
         },
 
     };

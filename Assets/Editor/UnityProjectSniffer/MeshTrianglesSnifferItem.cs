@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 namespace ZXthex.UnityProjectSniffer
 {
@@ -8,13 +9,33 @@ namespace ZXthex.UnityProjectSniffer
     class MeshTrianglesSnifferItem : SnifferTypeItem
     {
         protected override string title => "(Meshes referenced by MeshFilter and SkinnedMeshRenderer).triangles.Length | Scene";
-        public override void DrawItemGUI()
+
+        int[] values;
+        GUIContent[] contents;
+        int selectIndex;
+
+        public MeshTrianglesSnifferItem()
         {
+            values = System.Enum.GetValues(typeof(TrianglesInSceneMeshCalc.ActiveMode)) as int[];
+            contents = new GUIContent[values.Length];
+            for (int i = 0; i < contents.Length; i++)
+            {
+                contents[i] = new GUIContent(L10n.Tr("TrianglesInSceneMeshCalc.ActiveMode." + (TrianglesInSceneMeshCalc.ActiveMode)values[i]));
+            }
+        }
+
+        public override Rect DrawItemGUI(Rect lastRect)
+        {
+            var itemR = new Rect(lastRect.x, lastRect.yMax + 20f, lastRect.width, 36);
+            selectIndex = EditorGUI.Popup(itemR, selectIndex, contents);
+            
+            return itemR;
         }
 
         public override Int64Calc GetItemCalc()
         {
-            return new TrianglesInSceneMeshCalc(UnityEngine.SceneManagement.SceneManager.GetActiveScene());
+            var mode = (TrianglesInSceneMeshCalc.ActiveMode)values[selectIndex];
+            return new TrianglesInSceneMeshCalc(UnityEngine.SceneManagement.SceneManager.GetActiveScene(), mode);
         }
     }
 
@@ -82,7 +103,7 @@ namespace ZXthex.UnityProjectSniffer
                 //tooltip
                 {
                     int sibling = go.transform.GetSiblingIndex();
-                    gui.tooltip = UnityUtils.GetGameObjectPath(go, 40) +" [" + sibling+"]";
+                    gui.tooltip = UnityUtils.GetGameObjectPath(go, 40) + " [" + sibling + "]";
                 }
                 gui.model = model;
                 map[go] = (model, gui);

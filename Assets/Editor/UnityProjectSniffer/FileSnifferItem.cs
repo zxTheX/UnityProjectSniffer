@@ -5,9 +5,6 @@ using ZXthex.UnityProjectSniffer;
 class FileSnifferItem : SnifferTypeItem
 {
     protected override string title => "File Size | Assets";
-    public override void DrawItemGUI()
-    {
-    }
 
     public override Int64Calc GetItemCalc()
     {
