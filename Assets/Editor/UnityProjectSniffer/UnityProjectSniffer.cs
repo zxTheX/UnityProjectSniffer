@@ -22,11 +22,6 @@ namespace ZXthex.UnityProjectSniffer
             var window = CreateInstance<SnifferEditorWindow>();
 
             window.titleContent = new GUIContent("Sniffer");
-            window.startView = true;
-            window.snifferItems = new SnifferTypeItem[] {
-                                    new MeshTrianglesSnifferItem(),
-                                    new FileSnifferItem(),
-                                };
 
             window.Init();
             window.Show();
@@ -37,8 +32,20 @@ namespace ZXthex.UnityProjectSniffer
 
         void Init()
         {
+            resetFlag = new object();
+            startView = true;
+            snifferItems = new SnifferTypeItem[] {
+                                    new MeshTrianglesSnifferItem(),
+                                    new FileSnifferItem(),
+                                };
             popupContents = (from item in snifferItems select item.CreateGUIContent()).ToArray();
             CheckStyles();
+        }
+
+        void Reset()
+        {
+            progress_100 = 0;
+            Init();
         }
 
         #region Styles
@@ -146,10 +153,15 @@ namespace ZXthex.UnityProjectSniffer
 
         int popIndex = 0;
 
+        object resetFlag;
+
         SnifferTypeItem[] snifferItems;
 
         private void OnGUI()
         {
+            if (resetFlag == null)
+                Reset();
+
             CheckStyles();
 
             if (startView)
